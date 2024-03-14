@@ -1,0 +1,81 @@
+pipeline {
+    agent any
+    
+    tools {
+        nodejs 'node' 
+
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code from GitHub...'
+                // Checkout the source code from the repository
+                git branch: 'main', url: 'https://github.com/Tanaystudent/bmi.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the code...'
+                // Use a build automation tool like npm or yarn for React projects
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                echo 'Running unit and integration tests...'
+                // Use testing frameworks like Jest or React Testing Library for React projects
+                sh 'npm test'
+                emailext attachLog: true, body: '''The test stage is successfully executed. Kindly fine the attached log files.
+
+
+                Best Regards
+                Team Automation''', subject: 'BMI Pipline', to: 'tanay4847.be22@chitkara.edu.in'
+            }
+        }
+        stage('Code Analysis') {
+            steps {
+                echo 'Running code analysis...'
+                // Use tools like ESLint or SonarQube for code analysis
+                // Integrate with Jenkins using available plugins
+                // For example: sh 'eslint .'
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                echo 'Performing security scan...'
+                // Use security scanning tools like OWASP Dependency-Check
+                // Integrate with Jenkins using available plugins
+                // For example: sh 'dependency-check.sh --project <project_name> --scan <path_to_project>'
+                emailext attachLog: true, body: '''The security scan stage is successfully executed. Kindly fine the attached log files.
+
+
+                Best Regards
+                Team Automation''', subject: 'BMI Pipline', to: 'tanay4847.be22@chitkara.edu.in'
+            }
+        }
+        stage('Deploy to Staging') {
+            steps {
+                echo 'Deploying to staging server...'
+                // Use deployment tools like AWS CodeDeploy or Jenkins Deploy plugin
+                // For example: sh 'aws deploy create-deployment --application-name <app_name> --deployment-group-name <group_name> --s3-location <location>'
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests on staging...'
+                // Use testing frameworks to run integration tests on the staging environment
+                // For example: sh 'npm run integration-test'
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deploying to production server...'
+                // Use deployment tools like AWS CodeDeploy or Jenkins Deploy plugin
+                // For example: sh 'aws deploy create-deployment --application-name <app_name> --deployment-group-name <group_name> --s3-location <location>'
+            }
+        }
+    }
+    
+}
