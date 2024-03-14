@@ -5,7 +5,7 @@ class App extends Component {
 
   constructor(props) {
      super(props);
-     this.state = { name: 'User1', weight: 90, height: 180, bmi: 27, message: '', optimalweight: '', time: new Date().toLocaleTimeString() };
+     this.state = { name: 'User2', weight: 90, height: 180, bmi: 27, message: '', optimalweight: '', time: new Date().toLocaleTimeString() };
      this.submitMe = this.submitMe.bind(this);
      this.heightchange = this.heightchange.bind(this);
      this.weightchange = this.weightchange.bind(this);
